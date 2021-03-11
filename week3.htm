@@ -1,0 +1,157 @@
+<style>
+html, body {
+width: 100%;
+height: 100%;
+margin: 0px;
+padding: 0px;
+}
+
+
+nav{font-size:20px;}
+nav > .new>.logo{flex:auto;margin:auto;font-size: 20px;}
+nav > .new>.menu{flex:none;font-size: 20px;}
+
+.new{width:100%;display:flex; flex-wrap:wrap; justify-content:center;}
+
+.view>.profiles {
+display: flex;
+justify-content: center;
+flex-wrap: wrap;
+margin-top: 20px;
+}
+
+.view>.profiles>.profile {
+display: flex;
+flex-direction: column;
+width: 22%;
+margin: 1%;
+background-color: #eeeeee;
+max-height: 450px;}
+
+.view>.profiles>.profile>img{height:75%}
+
+.view{width:1200px; max-width: 100%; margin: 0px auto;}
+
+
+.title {text-align: center;}
+
+
+.item {
+flex: 1;
+background-color: #9cb8c5ad;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 300px;
+font-size:40px;
+}
+
+.butstyle{margin-left:45%;margin-top:20px}
+
+.hamber{display:none}
+
+
+@media screen and (max-width:1200px){
+.view>.profiles {flex-wrap:wrap;}
+.view>.profiles>.profile {width:35%;margin:3%}
+}
+
+@media screen and (max-width:600px)
+{
+.menu{display:none;}
+.hamber{display:block;}
+.view>.profiles {flex-wrap:wrap;}
+.view>.profiles>.profile {width:90%;margin:3%}
+.view>.profiles>.profile>img {height: 85%;}
+.butstyle{margin-left:40%;margin-top:20px}
+}
+
+
+</style>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charest="utf-8" />
+<title>JS</title>
+
+<script type="text/javascript">
+window.onload = function ()
+{
+		var req = new XMLHttpRequest();
+		req.open("get","https://padax.github.io/taipei-day-trip-resources/taipei-attractions.json")
+		req.onload=function()
+		{
+				//連線完成
+				var newContent = this.responseText;
+				var jsonObj = JSON.parse(newContent);
+				var con = jsonObj["result"]["results"];
+				var count=con.length;
+				var stitle ;
+				var pic;
+				var newpic;
+				for (var i=0;i<8;i++)
+				{
+					stitle = con[i]["stitle"];
+					pic = con[i]["file"].split('http');
+					newpic = "http"+pic[1];
+
+					var firstdiv = document.getElementById("div1"); //大框架
+					var newdiv = document.createElement("div"); //每個div
+					newdiv.className = "profile" //每個圖片的class
+					firstdiv.appendChild(newdiv); //大框架下每個div
+					var image = document.createElement("img");
+					var br = document.createElement("br");
+					var div2 = document.createElement("div");
+					var div2txt = document.createTextNode(stitle);
+					image.setAttribute("src",newpic);//插入圖片
+					newdiv.appendChild(image); //每個div下的圖片
+					newdiv.appendChild(br); //換行
+					newdiv.appendChild(div2);//增加文字的區塊
+					div2.appendChild(div2txt);//加入文字
+					div2.className = "title";//套上文字的CSS
+				}
+		}
+		req.send(); //送出連線
+}
+
+
+
+
+
+</script>
+</head>
+<body>
+<nav>
+<div class="new">
+<div class="logo">My Website</div>
+<div class="menu"><span onclick="getData();">Item 1</span></div> &nbsp;
+<div class="menu">Item 2</div> &nbsp;
+<div class="menu">Item 3</div> &nbsp;
+<div class="menu">Item 4</div> &nbsp;
+<div class="hamber"><img src="https://i.imgur.com/55nOJMW.jpg" width="50"></div>
+</div>
+</nav>
+
+<div class="item">Welcome to MyHome</div>
+
+<div class="view">
+<div id="div1" class="profiles">
+
+
+
+
+</div>
+
+
+
+</div>
+
+
+</body>
+
+
+
+
+
+</html>
